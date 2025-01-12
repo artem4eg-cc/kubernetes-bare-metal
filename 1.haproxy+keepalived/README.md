@@ -69,3 +69,38 @@ root@haproxy-server1:~# ip link set down enp1s0
 
 root@haproxy-server2:~# ip address show enp1s0
 ```
+### HAProxy
+```bash
+root@haproxy-server1:~# apt -y install haproxy
+
+root@haproxy-server1:~# vi /etc/haproxy/haproxy.cfg
+
+# add
+listen kubernetes-apiserver-https
+  bind *:8383
+  mode tcp
+  option log-health-checks
+  timeout client 3h
+  timeout server 3h
+  server node1 192.168.124.201:6443 check check-ssl verify none inter 10000
+  server node2 192.168.124.202:6443 check check-ssl verify none inter 10000
+  server node3 192.168.124.203:6443 check check-ssl verify none inter 10000
+  balance roundrobin
+```
+```bash
+root@haproxy-server2:~# apt -y install haproxy
+
+root@haproxy-server2:~# vi /etc/haproxy/haproxy.cfg
+
+# add
+listen kubernetes-apiserver-https
+  bind *:8383
+  mode tcp
+  option log-health-checks
+  timeout client 3h
+  timeout server 3h
+  server node1 192.168.124.201:6443 check check-ssl verify none inter 10000
+  server node2 192.168.124.202:6443 check check-ssl verify none inter 10000
+  server node3 192.168.124.203:6443 check check-ssl verify none inter 10000
+  balance roundrobin
+```
