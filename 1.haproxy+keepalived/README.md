@@ -1,7 +1,7 @@
-```
+```bash
 root@haproxy-server1:~# apt -y install keepalived
 ```
-```
+```bash
 root@haproxy-server1:~# vi /etc/keepalived/keepalived.conf
 
 global_defs {
@@ -16,7 +16,7 @@ vrrp_instance VRRP1 {
     priority 200
     advert_int 1
     virtual_ipaddress {
-        10.0.0.30/24
+        192.168.124.100/24
     }
 }
 
